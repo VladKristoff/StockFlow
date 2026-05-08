@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 
-class MainWindow:
+class TableWindow:
     def __init__(self, main_frame, app):
         self.main_frame = main_frame
         self.app = app

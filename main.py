@@ -1,11 +1,11 @@
 from tkinter import *
 from app import AppStockFlow
-from view.main_window import MainWindow
+from view.table_window import TableWindow
 
 if __name__ == "__main__":
     root = Tk()
     app = AppStockFlow(root)
 
-    app.show_window(MainWindow)
+    app.show_window(TableWindow)
 
     root.mainloop()
