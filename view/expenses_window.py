@@ -1,19 +1,18 @@
 from tkinter import *
 from tkinter import ttk
 
-class TableWindow:
+class ExpensesWindow:
     def __init__(self, main_frame, app):
         self.main_frame = main_frame
         self.app = app
-
         self.create_widgets()
 
     def create_widgets(self):
         for widget in self.main_frame.winfo_children():
             widget.destroy()
 
-        title = ttk.Label(self.main_frame, text="StockFlow", style="Text.TLabel")
-        title.pack(anchor="w", padx=25, pady=10)
+        title = Label(self.main_frame, text="Расходная накладная")
+        title.pack(anchor="center")
 
     def destroy(self):
         for widget in self.main_frame.winfo_children():
