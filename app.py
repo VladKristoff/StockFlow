@@ -3,48 +3,7 @@ from tkinter import *
 from tkinter import ttk
 
 from PIL import Image, ImageTk
-
-
-def set_styles(root):
-    style = ttk.Style(root)
-
-    style.theme_use("clam")
-
-    # Обычная большая кнопка
-    style.configure("BigButton.TButton",
-                         background="#2F323A",
-                         font=("Inter Bold", 16),
-                         foreground="white",
-                         width=20,
-                         borderwidth=0,
-                         focusthickness=0,
-                         focuscolor="none",
-                         relief="flat")
-
-    style.map("BigButton.TButton",
-              background=[
-                  ('pressed', '#595E6C'),
-                  ('active', '#444853')
-              ],
-              foreground=[
-                  ('pressed', 'white'),
-                  ('active', 'white')
-              ])
-
-    # Выбранная большая кнопка
-    style.configure("Select.BigButton.TButton",
-                    background="#444853")
-
-    style.map("Select.BigButton.TButton",
-              background=[('pressed', '#444853'), ('active', '#444853')],
-              foreground=[('pressed', 'white'), ('active', 'white')])
-
-    # Надпись StockFlow
-    style.configure("Text.TLabel",
-                    background="#3C4250",
-                    foreground="white",
-                    font=("Arial Black", 23))
-
+from styles import set_styles
 
 class AppStockFlow:
     def __init__(self, root):
@@ -80,7 +39,7 @@ class AppStockFlow:
             self.header_logo = ImageTk.PhotoImage(pil_img)
 
             canvas = Canvas(header, width=100, height=100, background='#1D1D21', highlightthickness=0)
-            canvas.pack(side="left", padx=63, pady=7)
+            canvas.pack(side="left", padx=120, pady=7)
 
             canvas.create_image(0, 0, anchor="nw", image=self.header_logo)
 
