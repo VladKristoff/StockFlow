@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dfcf6770-d7eb-4cf8-bcc1-7f607b4b7dba" name="Changes" comment="Сделал перемещение между вкладками">
-      <change afterPath="$PROJECT_DIR$/styles.py" afterDir="false" />
+    <list default="true" id="dfcf6770-d7eb-4cf8-bcc1-7f607b4b7dba" name="Changes" comment="Переместил стили в отдельный файл, сделал фрейм для CRUD-операций">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/db_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/db_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles.py" beforeDir="false" afterPath="$PROJECT_DIR$/styles.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view/table_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/table_window.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,6 +52,7 @@
   &quot;keyToString&quot;: {
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;Python.app.executor&quot;: &quot;Run&quot;,
+    &quot;Python.db_manager.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
@@ -135,7 +136,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778323521656</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Переместил стили в отдельный файл, сделал фрейм для CRUD-операций">
+      <option name="closed" value="true" />
+      <created>1778411804699</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1778411804699</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -153,7 +162,8 @@
     <MESSAGE value="Начало, сделал открытие окна, название и иконка. Также есть header" />
     <MESSAGE value="Добавил logo на headred" />
     <MESSAGE value="Сделал перемещение между вкладками" />
-    <option name="LAST_COMMIT_MESSAGE" value="Сделал перемещение между вкладками" />
+    <MESSAGE value="Переместил стили в отдельный файл, сделал фрейм для CRUD-операций" />
+    <option name="LAST_COMMIT_MESSAGE" value="Переместил стили в отдельный файл, сделал фрейм для CRUD-операций" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

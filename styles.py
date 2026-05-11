@@ -65,9 +65,37 @@ def set_styles(root):
     # Надпись с информацией о подключении к БД
     style.configure("BD_info.TLabel",
                     background="#1D1D21",
-                    foreground="#B9FFDC",
                     font=("Arial", 14))
 
     # Entry поле
     style.configure("Entry.TEntry",
                     background="#7A7D84",)
+
+    # Таблица
+    # 1. Основной стиль таблицы
+    style.configure("Treeview",
+                    background="#1D1D21",
+                    foreground="white",
+                    rowheight=30,
+                    fieldbackground="#1D1D21",
+                    borderwidth=0,
+                    font=("Arial", 11)
+                    )
+
+    # 2. Стиль заголовков
+    style.configure("Treeview.Heading",
+                    background="#2A2A2E",
+                    foreground="white",
+                    relief="flat",
+                    font=("Arial", 12, "bold")
+                    )
+
+    # 3. Цвет выделенной строки
+    style.map("Treeview",
+              background=[('selected', '#444853')],
+              foreground=[('selected', '#B9FFDC')])
+
+    # 4. Цвет выделенного заголовка
+    style.map("Treeview.Heading",
+              background=[('selected', '#7A7D84')],
+              foreground=[('selected', '#B9FFDC')])
