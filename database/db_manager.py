@@ -14,19 +14,16 @@ def connect_bd():
     except Exception:
         return None
 
-
-def get_products():
-    try:
-        with psycopg.connect(
-            host="localhost",
-            port="5432",
-            dbname="PP_DB",
-            user="postgres",
-            password="1234"
-        ) as conn:
-            with conn.cursor() as cur:
-                cur.execute("SELECT id, name, price, count, type_id FROM products")
-                return cur.fetchall()
-    except Exception as e:
-        print(f"Ошибка при получении данных: {e}")
-        return []
+def get_any_table(table_name):
+    conn = connect_bd()
+    if conn:
+        try:
+            cursor = conn.cursor()
+            cursor.execute(f"SELECT * FROM {table_name} ORDER BY id ASC")
+            return cursor.fetchall()
+        except Exception as e:
+            print(f"Ошибка получения данных: {e}")
+            return []
+        finally:
+            conn.close()
+    return []
