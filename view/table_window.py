@@ -1,6 +1,6 @@
 from tkinter import *
-from tkinter import ttk
-from database.db_manager import connect_bd, get_any_table
+from tkinter import ttk, messagebox
+from database.db_manager import connect_bd, get_any_table, add_record, delete_record, update_record
 
 
 class TableWindow:
@@ -150,13 +150,118 @@ class TableWindow:
             self.tree.insert("", END, values=row)
 
     def on_add_click(self):
-        print(f"Add to {self.current_table}")
+        config = self.table_configs[self.current_table]
+
+        fields_to_input = [col for col in config["columns"] if col != "id"]
+        labels_to_show = [config["headings"][config["columns"].index(col)] for col in fields_to_input]
+
+        add_window = Toplevel(self.main_frame, background="#1D1D21")
+        add_window.title(f"Добавить: {config['display_name']}")
+        add_window.geometry("400x300")
+        add_window.resizable(width=False, height=False)
+        add_window.grab_set()
+
+        entries = {}
+        for i, (field, label_text) in enumerate(zip(fields_to_input, labels_to_show)):
+            ttk.Label(add_window, text=label_text, font=("Arial", 10),
+                      foreground="white",
+                      style="SmallText.TLabel").pack(pady=(10, 0))
+            entry = ttk.Entry(add_window, width=30)
+            entry.pack()
+            entries[field] = entry
+
+        def save_new_record():
+            # Собираем данные из полей ввода
+            values = tuple(entries[field].get() for field in fields_to_input)
+
+            if any(v == "" for v in values):
+                messagebox.showwarning("Ошибка", "Заполните все поля!")
+                return
+
+            # Отправляем в БД, используя имя текущей таблицы
+            add_record(self.current_table, fields_to_input, values)
+
+            add_window.destroy()
+            self.load_data()  # Перезагружаем таблицу, чтобы увидеть изменения
+
+        ttk.Button(add_window, text="Сохранить", command=save_new_record, style="Button.TButton").pack(pady=20)
+
 
     def on_edit_click(self):
-        print(f"Edit in {self.current_table}")
+        # 1. Проверяем, выбрана ли строка в таблице
+        selected_item = self.tree.selection()
+        if not selected_item:
+            messagebox.showwarning("Внимание", "Выберите строку для редактирования!")
+            return
+
+        # 2. Извлекаем текущие значения строки и конфигурацию таблицы
+        row_values = self.tree.item(selected_item)['values']
+        config = self.table_configs[self.current_table]
+
+        # ID всегда идет первым в списке колонок
+        record_id = row_values[0]
+
+        # Исключаем ID из полей для редактирования
+        fields_to_edit = [col for col in config["columns"] if col != "id"]
+
+        # 3. Создаем модальное окно редактирования
+        edit_window = Toplevel(self.main_frame, background="#1D1D21")
+        edit_window.title(f"Редактировать запись ID {record_id} — {config['display_name']}")
+        edit_window.geometry("400x350")
+        edit_window.resizable(width=False, height=False)
+        edit_window.grab_set()
+
+        entries = {}
+
+        # Строим поля ввода и заполняем их старыми данными
+        for col in fields_to_edit:
+            # Находим индекс колонки в общем списке, чтобы правильно сопоставить с row_values
+            idx = config["columns"].index(col)
+            label_text = config["headings"][idx]
+            old_value = row_values[idx]
+
+            ttk.Label(edit_window, text=label_text, font=("Arial", 10),
+                      foreground="white",
+                      style="SmallText.TLabel").pack(pady=(10, 0))
+            entry = ttk.Entry(edit_window, width=30)
+            entry.pack()
+
+            # Предзаполняем поле старым значением
+            entry.insert(0, old_value)
+            entries[col] = entry
+
+        # 4. Логика сохранения изменений
+        def save_changes():
+            new_values = [entries[col].get() for col in fields_to_edit]
+
+            if any(v == "" for v in new_values):
+                messagebox.showwarning("Ошибка", "Поля не должны быть пустыми!")
+                return
+
+            # Вызываем универсальный UPDATE запрос
+            update_record(self.current_table, fields_to_edit, new_values, record_id)
+
+            edit_window.destroy()
+            self.load_data()  # Обновляем Treeview
+
+        ttk.Button(edit_window, text="Сохранить изменения", command=save_changes, style="Button.TButton").pack(pady=20)
 
     def on_delete_click(self):
-        print(f"Delete from {self.current_table}")
+        # Получаем выделенную строку в Treeview
+        selected_item = self.tree.selection()
+        if not selected_item:
+            messagebox.showwarning("Внимание", "Выберите строку для удаления!")
+            return
+
+        # Берем значения строки (ID всегда первый в твоих конфигах)
+        row_values = self.tree.item(selected_item)['values']
+        record_id = row_values[0]
+
+        confirm = messagebox.askyesno("Подтверждение",
+                                      f"Удалить запись с ID {record_id} из таблицы {self.table_configs[self.current_table]['display_name']}?")
+        if confirm:
+            delete_record(self.current_table, record_id)
+            self.load_data()  # Обновляем интерфейс
 
     def destroy(self):
         if self.db_conn: self.db_conn.close()

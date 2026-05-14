@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dfcf6770-d7eb-4cf8-bcc1-7f607b4b7dba" name="Changes" comment="Сделал надпись с информацией о подключении к бд, (Подлкючение к БД сделал Дима), Добавил вывод таблицы и стили для таблицы">
+    <list default="true" id="dfcf6770-d7eb-4cf8-bcc1-7f607b4b7dba" name="Changes" comment="Дима сделал отображение всех нужных таблиц во вкладке &quot;Справочники&quot;, добавил кнопки &quot;Добавить&quot; и &quot;Удалить&quot; на другие вкладки">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/db_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/db_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/expenses_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/expenses_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/incoming_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/incoming_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles.py" beforeDir="false" afterPath="$PROJECT_DIR$/styles.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view/table_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/table_window.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,19 +48,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.app.executor": "Run",
-    "Python.db_manager.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "E:/VladProgramming/StockFlow"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.app.executor&quot;: &quot;Run&quot;,
+    &quot;Python.db_manager.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/VladProgramming/StockFlow&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="StockFlow" />
@@ -154,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778492465599</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Дима сделал отображение всех нужных таблиц во вкладке &quot;Справочники&quot;, добавил кнопки &quot;Добавить&quot; и &quot;Удалить&quot; на другие вкладки">
+      <option name="closed" value="true" />
+      <created>1778603020255</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1778603020255</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -174,7 +181,8 @@
     <MESSAGE value="Сделал перемещение между вкладками" />
     <MESSAGE value="Переместил стили в отдельный файл, сделал фрейм для CRUD-операций" />
     <MESSAGE value="Сделал надпись с информацией о подключении к бд, (Подлкючение к БД сделал Дима), Добавил вывод таблицы и стили для таблицы" />
-    <option name="LAST_COMMIT_MESSAGE" value="Сделал надпись с информацией о подключении к бд, (Подлкючение к БД сделал Дима), Добавил вывод таблицы и стили для таблицы" />
+    <MESSAGE value="Дима сделал отображение всех нужных таблиц во вкладке &quot;Справочники&quot;, добавил кнопки &quot;Добавить&quot; и &quot;Удалить&quot; на другие вкладки" />
+    <option name="LAST_COMMIT_MESSAGE" value="Дима сделал отображение всех нужных таблиц во вкладке &quot;Справочники&quot;, добавил кнопки &quot;Добавить&quot; и &quot;Удалить&quot; на другие вкладки" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
