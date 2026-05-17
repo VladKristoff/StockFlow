@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dfcf6770-d7eb-4cf8-bcc1-7f607b4b7dba" name="Changes" comment="Добавил действия к CRUD кнопкам">
+    <list default="true" id="dfcf6770-d7eb-4cf8-bcc1-7f607b4b7dba" name="Changes" comment="Обновление действий кнопок">
+      <change afterPath="$PROJECT_DIR$/database/db_doc_manager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/AddDocumentWindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/db_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/db_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/table_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/table_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/expenses_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/expenses_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/incoming_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/incoming_window.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +171,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778765993114</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Обновление действий кнопок">
+      <option name="closed" value="true" />
+      <created>1778995667224</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1778995667224</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -190,7 +201,8 @@
     <MESSAGE value="Сделал надпись с информацией о подключении к бд, (Подлкючение к БД сделал Дима), Добавил вывод таблицы и стили для таблицы" />
     <MESSAGE value="Дима сделал отображение всех нужных таблиц во вкладке &quot;Справочники&quot;, добавил кнопки &quot;Добавить&quot; и &quot;Удалить&quot; на другие вкладки" />
     <MESSAGE value="Добавил действия к CRUD кнопкам" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавил действия к CRUD кнопкам" />
+    <MESSAGE value="Обновление действий кнопок" />
+    <option name="LAST_COMMIT_MESSAGE" value="Обновление действий кнопок" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
