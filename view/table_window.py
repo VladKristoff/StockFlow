@@ -131,7 +131,7 @@ class TableWindow:
         self.right_content.pack(side="right", fill="both", expand=True, padx=30, pady=30)
 
         self.tree = ttk.Treeview(self.right_content, show="headings", style="Treeview")
-        scrollbar = ttk.Scrollbar(self.right_content, orient=VERTICAL, command=self.tree.yview)
+        scrollbar = ttk.Scrollbar(self.right_content, command=self.tree.yview)
         self.tree.configure(yscroll=scrollbar.set)
 
         self.tree.pack(side="left", fill="both", expand=True)
@@ -194,9 +194,9 @@ class TableWindow:
         fields_to_input = [col for col in config["columns"] if col != "id"]
         labels_to_show = [config["headings"][config["columns"].index(col)] for col in fields_to_input]
 
-        add_window = Toplevel(self.main_frame, background="#1D1D21")
+        add_window = Toplevel(self.main_frame, background="#3C4250")
         add_window.title(f"Добавить: {config['display_name']}")
-        add_window.geometry("400x450")
+        add_window.geometry("400x350")
         add_window.resizable(width=False, height=False)
         add_window.grab_set()
 
@@ -260,26 +260,21 @@ class TableWindow:
         ttk.Button(add_window, text="Сохранить", command=save_new_record, style="Button.TButton").pack(pady=20)
 
     def on_edit_click(self):
-        # Проверяем, выбрана ли строка в таблице
         selected_item = self.tree.selection()
         if not selected_item:
             messagebox.showwarning("Внимание", "Выберите строку для редактирования!")
             return
 
-        # Извлекаем текущие значения строки и конфигурацию таблицы
         row_values = self.tree.item(selected_item)['values']
         config = self.table_configs[self.current_table]
 
-        # ID всегда идет первым в списке колонок
         record_id = row_values[0]
 
-        # Исключаем ID из полей для редактирования
         fields_to_edit = [col for col in config["columns"] if col != "id"]
 
-        # Создаем модальное окно редактирования
-        edit_window = Toplevel(self.main_frame, background="#1D1D21")
+        edit_window = Toplevel(self.main_frame, background="#3C4250")
         edit_window.title(f"Редактировать запись ID {record_id} — {config['display_name']}")
-        edit_window.geometry("400x500")
+        edit_window.geometry("400x350")
         edit_window.resizable(width=False, height=False)
         edit_window.grab_set()
 
@@ -351,22 +346,18 @@ class TableWindow:
         ttk.Button(edit_window, text="Сохранить изменения", command=save_changes, style="Button.TButton").pack(pady=20)
 
     def on_delete_click(self):
-        # Получаем выделенную строку в Treeview
         selected_item = self.tree.selection()
         if not selected_item:
             messagebox.showwarning("Внимание", "Выберите строку для удаления!")
             return
 
-        # Берем значения строки (ID всегда первый в твоих конфигах)
         row_values = self.tree.item(selected_item)['values']
         record_id = row_values[0]
 
-        # Получаем название записи для информативного сообщения
         record_name = row_values[1] if len(row_values) > 1 else f"ID {record_id}"
 
         config = self.table_configs[self.current_table]
 
-        # Специальные сообщения для разных таблиц
         if self.current_table == "positions":
             confirm_msg = f"Удалить должность '{record_name}'?\n\nВнимание! Если есть сотрудники с этой должностью, удаление будет невозможно."
         elif self.current_table == "product_types":

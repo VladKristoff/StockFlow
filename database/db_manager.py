@@ -1,3 +1,4 @@
+# database/db_manager.py
 import psycopg
 
 
@@ -12,8 +13,47 @@ def connect_bd():
             connect_timeout=2
         )
         return conn
-    except Exception:
+    except Exception as e:
+        print(f"Ошибка подключения к БД: {e}")
         return None
+
+
+def get_any_table(table_name):
+    """Получить все записи из любой таблицы"""
+    conn = connect_bd()
+    if conn:
+        try:
+            cursor = conn.cursor()
+
+            # Специальные запросы для таблиц с внешними ключами (для отображения в справочниках)
+            if table_name == "products":
+                query = """
+                    SELECT p.id, p.name, p.price, p.count, pt.name as type_name
+                    FROM products p
+                    LEFT JOIN product_types pt ON p.type_id = pt.id
+                    ORDER BY p.id ASC
+                """
+            elif table_name == "employees":
+                query = """
+                    SELECT e.id, e.name, p.name as position_name
+                    FROM employees e
+                    LEFT JOIN positions p ON e.position_id = p.id
+                    ORDER BY e.id ASC
+                """
+            else:
+                # Для остальных таблиц - просто SELECT *
+                query = f"SELECT * FROM {table_name} ORDER BY id ASC"
+
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            cursor.close()
+            conn.close()
+
+            return rows
+        except Exception as e:
+            print(f"Ошибка получения данных из {table_name}: {e}")
+            return []
+    return []
 
 
 def validate_record_data(table_name, values, columns=None):
@@ -21,7 +61,6 @@ def validate_record_data(table_name, values, columns=None):
     errors = []
 
     if table_name == "products":
-        # Проверяем цену (обычно 3-й параметр или ищем по колонке)
         if columns:
             try:
                 price_idx = columns.index("price")
@@ -41,9 +80,8 @@ def validate_record_data(table_name, values, columns=None):
             except (ValueError, IndexError):
                 errors.append("Некорректное значение количества!")
         else:
-            # Если columns не передан, пробуем по позициям (для продуктов: id, name, price, count, type_name)
             try:
-                price = float(values[2])  # price на позиции 2
+                price = float(values[2])
                 if price < 0:
                     errors.append("Цена не может быть отрицательной!")
                 elif price == 0:
@@ -52,7 +90,7 @@ def validate_record_data(table_name, values, columns=None):
                 errors.append("Некорректное значение цены!")
 
             try:
-                count = int(values[3])  # count на позиции 3
+                count = int(values[3])
                 if count < 0:
                     errors.append("Количество не может быть отрицательным!")
             except (ValueError, IndexError):
@@ -81,115 +119,41 @@ def validate_record_data(table_name, values, columns=None):
     return errors
 
 
-def check_dependencies(table_name, record_id):
-    """Проверка наличия зависимых записей перед удалением"""
-    conn = connect_bd()
-    if not conn:
-        return True, "Ошибка подключения к базе данных!"
-
-    try:
-        cursor = conn.cursor()
-
-        if table_name == "positions":
-            # Проверяем, есть ли сотрудники с этой должностью
-            cursor.execute("SELECT COUNT(*) FROM employees WHERE position_id = %s", (record_id,))
-            count = cursor.fetchone()[0]
-            if count > 0:
-                return False, f"Невозможно удалить должность! На нее ссылаются {count} сотрудник(ов). Сначала удалите или измените должность у сотрудников."
-
-        elif table_name == "product_types":
-            # Проверяем, есть ли товары этого типа
-            cursor.execute("SELECT COUNT(*) FROM products WHERE type_id = %s", (record_id,))
-            count = cursor.fetchone()[0]
-            if count > 0:
-                return False, f"Невозможно удалить тип товара! Существует {count} товар(ов) этого типа. Сначала удалите или измените тип у товаров."
-
-        elif table_name == "products":
-            # Проверяем, есть ли товар в каких-либо документах (если есть таблицы документов)
-            # Добавьте проверки для ваших документов
-            pass
-
-        return True, ""
-    except Exception as e:
-        return False, f"Ошибка проверки зависимостей: {e}"
-    finally:
-        conn.close()
-
-
-def get_any_table(table_name):
-    conn = connect_bd()
-    if conn:
-        try:
-            cursor = conn.cursor()
-
-            # Специальные запросы для таблиц с внешними ключами
-            if table_name == "products":
-                query = """
-                    SELECT p.id, p.name, p.price, p.count, pt.name as type_name
-                    FROM products p
-                    LEFT JOIN product_types pt ON p.type_id = pt.id
-                    ORDER BY p.id ASC
-                """
-            elif table_name == "employees":
-                query = """
-                    SELECT e.id, e.name, p.name as position_name
-                    FROM employees e
-                    LEFT JOIN positions p ON e.position_id = p.id
-                    ORDER BY e.id ASC
-                """
-            else:
-                query = f"SELECT * FROM {table_name} ORDER BY id ASC"
-
-            cursor.execute(query)
-            return cursor.fetchall()
-        except Exception as e:
-            print(f"Ошибка получения данных: {e}")
-            return []
-        finally:
-            conn.close()
-    return []
-
-
 def add_record(table_name, columns, values):
+    """Добавить запись в таблицу"""
     conn = connect_bd()
     if not conn:
         return False, "Ошибка подключения к базе данных!"
 
     cursor = conn.cursor()
 
-    # Валидация данных
     validation_errors = validate_record_data(table_name, values, columns)
     if validation_errors:
         return False, "\n".join(validation_errors)
 
-    # Для products и employees нужно преобразовать названия в ID
     try:
+        # Для продуктов, если есть type_name - преобразуем в type_id
         if table_name == "products" and "type_name" in columns:
-            # Находим индекс type_name и преобразуем в type_id
-            if "type_name" in columns:
-                type_name_idx = columns.index("type_name")
-                type_name = values[type_name_idx]
+            type_name_idx = columns.index("type_name")
+            type_name = values[type_name_idx]
 
-                # Получаем ID типа товара по названию
-                cursor.execute("SELECT id FROM product_types WHERE name = %s", (type_name,))
-                result = cursor.fetchone()
-                if result:
-                    # Заменяем название на ID
-                    values = list(values)
-                    values[type_name_idx] = result[0]
-                    values = tuple(values)
-                    # Меняем имя колонки в запросе
-                    columns = list(columns)
-                    columns[type_name_idx] = "type_id"
-                    columns = tuple(columns)
-                else:
-                    return False, "Выбранный тип товара не найден в базе данных!"
+            cursor.execute("SELECT id FROM product_types WHERE name = %s", (type_name,))
+            result = cursor.fetchone()
+            if result:
+                values = list(values)
+                values[type_name_idx] = result[0]
+                values = tuple(values)
+                columns = list(columns)
+                columns[type_name_idx] = "type_id"
+                columns = tuple(columns)
+            else:
+                return False, "Выбранный тип товара не найден в базе данных!"
 
+        # Для сотрудников, если есть position_name - преобразуем в position_id
         elif table_name == "employees" and "position_name" in columns:
             position_name_idx = columns.index("position_name")
             position_name = values[position_name_idx]
 
-            # Получаем ID должности по названию
             cursor.execute("SELECT id FROM positions WHERE name = %s", (position_name,))
             result = cursor.fetchone()
             if result:
@@ -226,6 +190,7 @@ def add_record(table_name, columns, values):
 
 
 def update_record(table_name, columns, values, record_id):
+    """Обновить запись в таблице"""
     conn = connect_bd()
     if not conn:
         return False, "Ошибка подключения к базе данных!"
@@ -233,12 +198,10 @@ def update_record(table_name, columns, values, record_id):
     try:
         cursor = conn.cursor()
 
-        # Валидация данных
         validation_errors = validate_record_data(table_name, values, columns)
         if validation_errors:
             return False, "\n".join(validation_errors)
 
-        # Для products и employees нужно преобразовать названия в ID
         if table_name == "products" and "type_name" in columns:
             type_name_idx = columns.index("type_name")
             type_name = values[type_name_idx]
@@ -291,6 +254,7 @@ def update_record(table_name, columns, values, record_id):
 
 
 def delete_record(table_name, record_id):
+    """Удалить запись из таблицы"""
     conn = connect_bd()
     if not conn:
         return False, "Ошибка подключения к базе данных!"
@@ -298,11 +262,6 @@ def delete_record(table_name, record_id):
     cursor = conn.cursor()
 
     try:
-        # Проверяем зависимости перед удалением
-        can_delete, message = check_dependencies(table_name, record_id)
-        if not can_delete:
-            return False, message
-
         cursor.execute(f"DELETE FROM {table_name} WHERE id = {record_id}")
         conn.commit()
 
@@ -330,7 +289,6 @@ def search_records(table_name, search_term):
         cursor = conn.cursor()
         search_pattern = f"%{search_term}%"
 
-        # Разные запросы для разных таблиц
         if table_name == "products":
             query = """
                 SELECT p.id, p.name, p.price, p.count, pt.name as type_name
@@ -354,19 +312,7 @@ def search_records(table_name, search_term):
             """
             cursor.execute(query, (search_pattern, search_pattern))
 
-        elif table_name == "contractors":
-            query = f"""
-                SELECT * FROM {table_name}
-                WHERE name ILIKE %s 
-                   OR phone ILIKE %s 
-                   OR inn ILIKE %s 
-                   OR address ILIKE %s
-                ORDER BY id ASC
-            """
-            cursor.execute(query, (search_pattern, search_pattern, search_pattern, search_pattern))
-
         else:
-            # Для остальных таблиц
             cursor.execute(f"SELECT * FROM {table_name} WHERE name ILIKE %s ORDER BY id ASC", (search_pattern,))
 
         return cursor.fetchall()

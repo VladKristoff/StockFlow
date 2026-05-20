@@ -63,7 +63,8 @@ def set_styles(root):
                     font=("Arial Black", 26))
 
     style.configure("SmallText.TLabel",
-                    background="#1D1D21",)
+                    background="#3C4250",
+                    foreground="white")
 
     # Надпись с информацией о подключении к БД
     style.configure("BD_info.TLabel",

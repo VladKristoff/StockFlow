@@ -4,13 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dfcf6770-d7eb-4cf8-bcc1-7f607b4b7dba" name="Changes" comment="Обновление действий кнопок">
-      <change afterPath="$PROJECT_DIR$/database/db_doc_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/AddDocumentWindow.py" afterDir="false" />
+    <list default="true" id="dfcf6770-d7eb-4cf8-bcc1-7f607b4b7dba" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/utils/doc_generator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/db_doc_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/db_doc_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/db_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/db_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles.py" beforeDir="false" afterPath="$PROJECT_DIR$/styles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/AddDocumentWindow.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/view/expenses_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/expenses_window.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view/incoming_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/incoming_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/table_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/table_window.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +66,11 @@
     &quot;last_opened_file_path&quot;: &quot;E:/VladProgramming/StockFlow&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\VladProgramming\StockFlow\utils" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="StockFlow" />
@@ -179,7 +187,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778995667224</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Начал делать страницы с документами">
+      <option name="closed" value="true" />
+      <created>1778998276721</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1778998276721</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -202,7 +218,8 @@
     <MESSAGE value="Дима сделал отображение всех нужных таблиц во вкладке &quot;Справочники&quot;, добавил кнопки &quot;Добавить&quot; и &quot;Удалить&quot; на другие вкладки" />
     <MESSAGE value="Добавил действия к CRUD кнопкам" />
     <MESSAGE value="Обновление действий кнопок" />
-    <option name="LAST_COMMIT_MESSAGE" value="Обновление действий кнопок" />
+    <MESSAGE value="Начал делать страницы с документами" />
+    <option name="LAST_COMMIT_MESSAGE" value="Начал делать страницы с документами" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
